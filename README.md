@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ajaia Docs — Collaborative Document Studio
 
-## Getting Started
+A full-stack collaborative document workspace built with **Next.js 16 (App Router)**, **TypeScript**, **MongoDB Atlas (Mongoose)**, **Tiptap**, **Mammoth**, and **jsPDF**. Ajaia Docs enables teams to draft rich-text documents, import or append `.docx`/`.md`/`.txt` files, collaborate in real time with granular **Owner / Editor / Viewer** permissions, and export formatted A4 PDFs directly to local storage.
 
-First, run the development server:
+- **Live Production URL:** `https://ajaia-assessment-iota.vercel.app`
+- **Repository:** `https://github.com/Shahriar-Arko/AJAIA_Assessment`
 
+---
+
+## Core Features
+
+- **Authentication & Session Security:**
+  - SHA-256 password hashing with `httpOnly`, `SameSite=Lax` session cookies.
+  - Explicit registration flow and instant session termination on logout.
+- **Studio Workspace Dashboard:**
+  - Instant `Ctrl+K` / `Cmd+K` live search across document titles, body text, and owners.
+  - One-click starter templates (*Blank Canvas*, *Product Spec / PRD*, *Executive Meeting Notes*, *Technical Research Brief*), Grid/List view toggles, and drag-and-drop file ingestion.
+- **Rich-Text Editor & Multi-Format Ingestion:**
+  - Powered by **Tiptap (ProseMirror)** with headings (`H1–H3`), bold, italic, underline, ordered/unordered lists, undo/redo, and live word/character counters.
+  - Upload `.docx` (parsed via `mammoth`), `.md`, or `.txt` files to create new cloud documents or append formatted content directly inside an open document.
+- **Role-Based Access Control (RBAC):**
+  - Invite collaborators by email as **Editor** or **Viewer**, dynamically update roles inside the **People with Access** modal, and enforce `403 Forbidden` guards on `PATCH` and `DELETE` endpoints.
+- **Real-Time Multi-Tab Sync & 1-Click PDF Export:**
+  - Non-blocking `1.5s` background polling paired with `500ms` debounced auto-save keeps collaborator tabs synchronized without interrupting active typing.
+  - Client-side A4 PDF generation via `jsPDF` preserving document titles, headings, lists, and paragraph hierarchy.
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+| :--- | :--- |
+| **Framework** | Next.js 16 (App Router, Turbopack), React 19, TypeScript |
+| **Styling & Icons** | Tailwind CSS v4, Lucide React |
+| **Editor & Parsers** | Tiptap (`@tiptap/react`, `@tiptap/starter-kit`), Mammoth (`.docx`), jsPDF |
+| **Database & ODM** | MongoDB Atlas, Mongoose |
+| **Testing** | Vitest |
+| **Deployment** | Vercel |
+
+---
+
+## Local Setup & Run Instructions
+
+### Prerequisites
+- **Node.js** `v20+` and **npm**
+- A **MongoDB Atlas** cluster (or local MongoDB instance)
+
+### Step 1: Clone & Install Dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone [https://github.com/Shahriar-Arko/AJAIA_Assessment.git](https://github.com/Shahriar-Arko/AJAIA_Assessment.git)
+cd AJAIA_Assessment
+npm install --legacy-peer-deps
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Step 2: Configure Environment Variables
+Create a `.env.local` file in the project root (`F:\AJAIA\ajaia-docs\.env.local`):
+```env
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/ajaia-docs?retryWrites=true&w=majority
+```
+*(Ensure `0.0.0.0/0` or your local IP address is whitelisted in MongoDB Atlas → Network Access.)*
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Step 3: Run the Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Step 4: Run Automated Tests & Production Build
+```bash
+npx vitest run
+npm run build
+```
