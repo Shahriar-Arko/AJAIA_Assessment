@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="ajaiaGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="50%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#d946ef" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#ajaiaGrad)" />
+  <path d="M22 16h14l10 10v22a4 4 0 0 1-4 4H22a4 4 0 0 1-4-4V20a4 4 0 0 1 4-4z" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" />
+  <path d="M36 16v10h10" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" />
+  <path d="M25 34h14M25 41h10" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" />
+</svg>
